@@ -1,6 +1,6 @@
 # == Class: nextcloudmio::apache2
 #
-class nextcloudmio::apache2 {
+class miapache2::apache2 {
 
   case $facts['os']['family'] {
     'Debian': {
