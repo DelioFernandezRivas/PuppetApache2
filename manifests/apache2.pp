@@ -31,13 +31,6 @@ class miapache2::apache2 {
       before =>  Exec['available_site'],
   }
 
-  service { 'restartapache':
-    ensure     => running,
-    name       => 'apache2',
-    enable     => true,
-    restart    => 'systemctl restart apache2',
-  }
-
   exec { 'createsslcertificates':
     command    => '/usr/bin/openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -subj "/C=ES/ST=Spain/L=Madrid/O=Acme S.A./CN=www.nextcloudpuppet.com" -out /etc/ssl/certs/apache-selfsigned.crt',
   }
@@ -58,6 +51,13 @@ class miapache2::apache2 {
       require => [Exec['habilitarssl'],
       Exec['available_site'],
       ],
-      before  => Service['restartapache'],
+  }
+
+
+  service { 'restartapache':
+    ensure     => running,
+    name       => 'apache2',
+    enable     => true,
+    subscribe  => File['conf_ssl']
   }
 }
