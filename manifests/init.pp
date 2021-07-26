@@ -1,6 +1,6 @@
 # == Class: nextcloud
 #
 class miapache2 {
-  include 'mi-apache2::install'
-  include 'mi-apache2::apache2'
+  include 'miapache2::install'
+  include 'miapache2::apache2'
 }
