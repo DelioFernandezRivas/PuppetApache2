@@ -35,8 +35,7 @@ class miapache2::apache2 {
     ensure     => running,
     name       => 'apache2',
     enable     => true,
-    hasrestart => true,
-    hasstatus  => true,
+    restart    => 'systemctl restart apache2',
   }
 
   exec { 'createsslcertificates':
