@@ -17,6 +17,9 @@ class miapache2::apache2 {
       $rute2 = '/etc/apache2/conf-available/'
     }
   }
+  exec { 'available_site':
+    command => '/usr/sbin/a2ensite nextcloudssl.conf',
+  }
 
   file { 'conf_apache2':
       ensure => present,
@@ -26,10 +29,6 @@ class miapache2::apache2 {
       owner  => 'root',
       group  => 'root',
       before =>  Exec['available_site'],
-  }
-
-  exec { 'available_site':
-    command => '/usr/sbin/a2ensite nextcloudssl.conf',
   }
 
   service { 'restartapache':
@@ -59,7 +58,7 @@ class miapache2::apache2 {
       group   => 'root',
       require => [Exec['habilitarssl'],
       Exec['available_site'],
-      ]
+      ],
       before  => Service['restartapache'],
   }
 }
